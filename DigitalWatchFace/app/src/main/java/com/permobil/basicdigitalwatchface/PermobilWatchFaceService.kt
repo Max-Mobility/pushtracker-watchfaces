@@ -268,6 +268,18 @@ class PermobilWatchFaceService : CanvasWatchFaceService() {
             canvas.drawText(text, mXOffset, mYOffset, mTextPaint)
         }
 
+        private fun drawComplications(canvas: Canvas, currentTimeMillis: Long) {
+            var complicationId: Int
+            var complicationDrawable: ComplicationDrawable
+
+            for (i in 0 until COMPLICATION_IDS.size) {
+                complicationId = COMPLICATION_IDS[i]
+                complicationDrawable = mComplicationDrawableSparseArray.get(complicationId)
+
+                complicationDrawable.draw(canvas, currentTimeMillis)
+            }
+        }
+
         override fun onSurfaceChanged(holder: SurfaceHolder?, format: Int, width: Int, height: Int) {
             // For most Wear devices, width and height are the same, so we just chose one (width).
             val sizeOfComplication = width / 4
