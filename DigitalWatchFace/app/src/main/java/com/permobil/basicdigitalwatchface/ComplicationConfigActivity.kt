@@ -22,6 +22,13 @@ import java.util.concurrent.Executors
  */
 class ComplicationConfigActivity : Activity(), View.OnClickListener {
 
+    companion object {
+
+        private const val TAG = "ConfigActivity"
+
+        internal const val COMPLICATION_CONFIG_REQUEST_CODE = 1001
+    }
+
     private var mLeftComplicationId: Int = 0
     private var mRightComplicationId: Int = 0
 
@@ -59,7 +66,6 @@ class ComplicationConfigActivity : Activity(), View.OnClickListener {
 
         mDefaultAddComplicationDrawable = getDrawable(R.drawable.add_complication)
 
-        // TODO: Step 3, initialize 1
         mSelectedComplicationId = -1
 
         mLeftComplicationId = PermobilWatchFaceService.getComplicationId(ComplicationLocation.LEFT)
@@ -106,7 +112,7 @@ class ComplicationConfigActivity : Activity(), View.OnClickListener {
                             watchFaceComplicationId: Int,
                             complicationProviderInfo: ComplicationProviderInfo?) {
 
-                        Log.d(TAG, "onProviderInfoReceived: " + complicationProviderInfo!!)
+                        Log.d(TAG, "onProviderInfoReceived: $complicationProviderInfo")
 
                         updateComplicationViews(watchFaceComplicationId, complicationProviderInfo)
                     }
@@ -155,7 +161,7 @@ class ComplicationConfigActivity : Activity(), View.OnClickListener {
     fun updateComplicationViews(
             watchFaceComplicationId: Int, complicationProviderInfo: ComplicationProviderInfo?) {
         Log.d(TAG, "updateComplicationViews(): id: $watchFaceComplicationId")
-        Log.d(TAG, "\tinfo: " + complicationProviderInfo!!)
+        Log.d(TAG, "\tinfo: $complicationProviderInfo")
 
         if (watchFaceComplicationId == mLeftComplicationId) {
             if (complicationProviderInfo != null) {
@@ -190,10 +196,5 @@ class ComplicationConfigActivity : Activity(), View.OnClickListener {
 
     }
 
-    companion object {
 
-        private const val TAG = "ConfigActivity"
-
-        internal const val COMPLICATION_CONFIG_REQUEST_CODE = 1001
-    }
 }
