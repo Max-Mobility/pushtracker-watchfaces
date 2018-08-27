@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Message
 import android.support.v4.content.ContextCompat
+import android.support.v4.content.res.ResourcesCompat
 import android.support.wearable.complications.ComplicationData
 import android.support.wearable.complications.ComplicationHelperActivity
 import android.support.wearable.complications.rendering.ComplicationDrawable
@@ -38,7 +39,6 @@ class PermobilWatchFaceService : CanvasWatchFaceService() {
 
     companion object {
 
-        // BRAD - working on complication data exposure to watch face
         private const val TAG = "PermobilDigitalWatchFace"
 
         private const val LEFT_COMPLICATION_ID = 0
@@ -46,8 +46,19 @@ class PermobilWatchFaceService : CanvasWatchFaceService() {
 
         private val COMPLICATION_IDS = intArrayOf(LEFT_COMPLICATION_ID, RIGHT_COMPLICATION_ID)
         // Left and right dial supported types.
-        private val COMPLICATION_SUPPORTED_TYPES = arrayOf(intArrayOf(ComplicationData.TYPE_RANGED_VALUE, ComplicationData.TYPE_ICON, ComplicationData.TYPE_SHORT_TEXT, ComplicationData.TYPE_SMALL_IMAGE), intArrayOf(ComplicationData.TYPE_RANGED_VALUE, ComplicationData.TYPE_ICON, ComplicationData.TYPE_SHORT_TEXT, ComplicationData.TYPE_SMALL_IMAGE))
-
+        private val COMPLICATION_SUPPORTED_TYPES = arrayOf(
+                intArrayOf(
+                        ComplicationData.TYPE_RANGED_VALUE,
+                        ComplicationData.TYPE_ICON,
+                        ComplicationData.TYPE_SHORT_TEXT,
+                        ComplicationData.TYPE_SMALL_IMAGE
+                ),
+                intArrayOf(
+                        ComplicationData.TYPE_RANGED_VALUE,
+                        ComplicationData.TYPE_ICON,
+                        ComplicationData.TYPE_SHORT_TEXT,
+                        ComplicationData.TYPE_SMALL_IMAGE)
+        )
 
         private val NORMAL_TYPEFACE = Typeface.create(Typeface.SANS_SERIF, Typeface.NORMAL)
 
@@ -159,7 +170,7 @@ class PermobilWatchFaceService : CanvasWatchFaceService() {
 
             // Initializes Watch Face.
             mTextPaint = Paint().apply {
-                typeface = NORMAL_TYPEFACE
+                typeface = ResourcesCompat.getFont(applicationContext, R.font.computer_robot)
                 isAntiAlias = true
                 color = ContextCompat.getColor(applicationContext, R.color.digital_text)
                 textAlign = Paint.Align.CENTER
@@ -242,31 +253,25 @@ class PermobilWatchFaceService : CanvasWatchFaceService() {
             for (i in 0 until COMPLICATION_IDS.size) {
                 complicationId = COMPLICATION_IDS[i]
                 Log.i(TAG, "complicationId $complicationId")
-                try {
-                    complicationData = mActiveComplicationDataSparseArray[complicationId]
-                    Log.i(TAG, "getTappedComplicationId $complicationData")
+                complicationData = mActiveComplicationDataSparseArray[complicationId]
+                Log.i(TAG, "getTappedComplicationId $complicationData")
 
-                    if (complicationData != null
-                            && complicationData.isActive(currentTimeMillis)
-                            && complicationData.type != ComplicationData.TYPE_NOT_CONFIGURED
-                            && complicationData.type != ComplicationData.TYPE_EMPTY) {
+                if (complicationData != null
+                        && complicationData.isActive(currentTimeMillis)
+                        && complicationData.type != ComplicationData.TYPE_NOT_CONFIGURED
+                        && complicationData.type != ComplicationData.TYPE_EMPTY) {
 
-                        complicationDrawable = mComplicationDrawableSparseArray[complicationId]
-                        val complicationBoundingRect = complicationDrawable.bounds
+                    complicationDrawable = mComplicationDrawableSparseArray[complicationId]
+                    val complicationBoundingRect = complicationDrawable.bounds
 
-                        if (complicationBoundingRect.width() > 0) {
-                            if (complicationBoundingRect.contains(x, y)) {
-                                return complicationId
-                            }
-                        } else {
-                            Log.e(TAG, "Not a recognized complication id.")
+                    if (complicationBoundingRect.width() > 0) {
+                        if (complicationBoundingRect.contains(x, y)) {
+                            return complicationId
                         }
+                    } else {
+                        Log.e(TAG, "Not a recognized complication id.")
                     }
-
-                } catch (e: IllegalStateException) {
-                    Log.e(TAG, "IllegalStateException in COMPLICATION_IDS loop $e")
                 }
-
             }
             return -1
         }
@@ -295,7 +300,7 @@ class PermobilWatchFaceService : CanvasWatchFaceService() {
             // whether we're in ambient mode), so we may need to start or stop the timer.
             updateTimer()
         }
-        
+
         override fun onDraw(canvas: Canvas, bounds: Rect) {
             // Draw the background.
             if (mAmbient) {
@@ -343,7 +348,10 @@ class PermobilWatchFaceService : CanvasWatchFaceService() {
             val midpointOfScreen = width / 2
 
             val horizontalOffset = (midpointOfScreen - sizeOfComplication) / 2
-            val verticalOffset = midpointOfScreen - sizeOfComplication / 2
+//            val verticalOffset = midpointOfScreen - sizeOfComplication / 2
+            val verticalOffset = (midpointOfScreen + 80) - sizeOfComplication / 2
+
+            Log.i(TAG, "hOffset $horizontalOffset, vOffset $verticalOffset")
 
             val leftBounds =
             // Left, Top, Right, Bottom
