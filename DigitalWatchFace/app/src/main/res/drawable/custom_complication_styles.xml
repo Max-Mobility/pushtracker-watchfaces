@@ -1,32 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<drawable
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<drawable xmlns:app="http://schemas.android.com/apk/res-auto"
     class="android.support.wearable.complications.rendering.ComplicationDrawable"
-    app:backgroundColor="@android:color/black"
+    app:backgroundColor="@color/black"
     app:borderColor="@color/white"
-    app:borderDashGap="4dp"
-    app:borderDashWidth="1dp"
+    app:borderDashGap="3dp"
+    app:borderDashWidth="2dp"
     app:borderRadius="50dp"
     app:borderStyle="dashed"
-    app:borderWidth="3dp"
-    app:highlightColor="@color/fuchsia"
-    app:iconColor="@color/dark_blue"
-    app:rangedValuePrimaryColor="@color/teal"
+    app:borderWidth="1dp"
+    app:highlightColor="@color/white"
+    app:iconColor="@color/white"
+    app:rangedValuePrimaryColor="@color/permobil_orange"
     app:rangedValueRingWidth="1dp"
-    app:rangedValueSecondaryColor="@color/white"
-    app:textColor="@color/white"
-    app:textSize="12sp"
-    app:textTypeface="sans-serif-condensed"
+    app:rangedValueSecondaryColor="@color/gray"
+    app:textColor="@color/permobil_blue"
+    app:textSize="15sp"
+    app:textTypeface="@font/computer_robot"
     app:titleColor="@color/gray"
     app:titleSize="10sp"
-    app:titleTypeface="sans-serif">
+    app:titleTypeface="@font/computer_robot">
 
     <ambient
+        app:borderColor="@android:color/transparent"
         app:highlightColor="@color/white"
         app:iconColor="@color/white"
         app:rangedValuePrimaryColor="@color/white"
-        app:titleColor="@color/white"
-        app:borderColor="@android:color/transparent"
-        app:rangedValueSecondaryColor="@android:color/transparent"/>
+        app:rangedValueSecondaryColor="@android:color/transparent"
+        app:titleColor="@color/white" />
 </drawable>
