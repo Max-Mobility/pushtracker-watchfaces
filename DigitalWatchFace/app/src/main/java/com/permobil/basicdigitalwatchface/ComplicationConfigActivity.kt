@@ -74,8 +74,8 @@ class ComplicationConfigActivity : Activity(), View.OnClickListener {
         mWatchFaceComponentName = ComponentName(applicationContext, PermobilWatchFaceService::class.java)
 
         // Sets up left complication preview.
-        mLeftComplicationBackground = findViewById<ImageView>(R.id.left_complication_background)
-        mLeftComplication = findViewById<ImageButton>(R.id.left_complication)
+        mLeftComplicationBackground = findViewById(R.id.left_complication_background)
+        mLeftComplication = findViewById(R.id.left_complication)
         mLeftComplication!!.setOnClickListener(this)
 
         // Sets default as "Add Complication" icon.
@@ -83,8 +83,8 @@ class ComplicationConfigActivity : Activity(), View.OnClickListener {
         mLeftComplicationBackground!!.visibility = View.INVISIBLE
 
         // Sets up right complication preview.
-        mRightComplicationBackground = findViewById<ImageView>(R.id.right_complication_background)
-        mRightComplication = findViewById<ImageButton>(R.id.right_complication)
+        mRightComplicationBackground = findViewById(R.id.right_complication_background)
+        mRightComplication = findViewById(R.id.right_complication)
         mRightComplication!!.setOnClickListener(this)
 
         // Sets default as "Add Complication" icon.
@@ -102,7 +102,7 @@ class ComplicationConfigActivity : Activity(), View.OnClickListener {
         mProviderInfoRetriever!!.release()
     }
 
-    fun retrieveInitialComplicationsData() {
+    private fun retrieveInitialComplicationsData() {
 
         val complicationIds = PermobilWatchFaceService.getComplicationIds()
 
@@ -123,12 +123,12 @@ class ComplicationConfigActivity : Activity(), View.OnClickListener {
 
     override fun onClick(view: View) {
         if (view == mLeftComplication) {
-            Log.d(TAG, "Left Complication click()")
-            launchComplicationHelperActivity(ComplicationLocation.LEFT)
+            Log.i(TAG, "Left Complication click()")
+            this.launchComplicationHelperActivity(ComplicationLocation.LEFT)
 
         } else if (view == mRightComplication) {
-            Log.d(TAG, "Right Complication click()")
-            launchComplicationHelperActivity(ComplicationLocation.RIGHT)
+            Log.i(TAG, "Right Complication click()")
+            this.launchComplicationHelperActivity(ComplicationLocation.RIGHT)
         }
     }
 
